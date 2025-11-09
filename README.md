@@ -31,12 +31,40 @@ The project consists of three main components:
 - Efficient C implementation of core algorithms
 - Cross-platform compatibility
 
+## Makefile Explanation
+
+The project includes a Makefile that automates the build process for the C components. Here's what each part does:
+
+### Makefile Components
+```makefile
+CC = gcc                    # Specifies the C compiler to use
+CFLAGS = -Wall -Wextra -O2 # Compiler flags for warnings and optimization
+```
+
+### Makefile Targets
+- `make all`: Builds both compression and decompression executables
+- `make clean`: Removes compiled executables and test files
+- `make test`: Runs automated tests for compression/decompression
+
+### Compiler Flags Explained
+- `-Wall`: Enable all common warning messages
+- `-Wextra`: Enable additional warning messages
+- `-O2`: Level 2 optimization for better performance
+
+### Building Process
+The Makefile handles:
+1. Compiling C source files with appropriate flags
+2. Dependency management for header files
+3. Automated testing of compression/decompression
+4. Cleanup of temporary and compiled files
+
 ## Setup and Running
 
 1. **Build the C Program**:
 ```bash
 cd algorithm
-make
+make         # Builds the executables
+make test    # Optional: Run tests
 ```
 
 2. **Setup Python Backend**:
@@ -98,3 +126,40 @@ python -m http.server 8000
 - Provides detailed error messages
 - Automatic cleanup of temporary files
 - Secure file handling
+
+## Development and Testing
+
+### Automated Testing
+The project includes automated tests that can be run using:
+```bash
+cd algorithm
+make test
+```
+
+This will:
+1. Create a test input file with sample text
+2. Compress the test file
+3. Decompress the compressed file
+4. Compare input and output files
+5. Report test results
+
+### Test Cases Include
+- Empty files
+- Single character repeated
+- Mixed text content
+- Special characters
+- Large files
+- Binary files
+
+### Development Tools
+- **Makefile**: Automates building and testing
+- **GCC**: C compiler with optimization flags
+- **Python**: Backend server implementation
+- **Flask**: Web framework for API
+- **JavaScript**: Frontend implementation
+
+### Debugging
+- Use `make clean` to remove all compiled files
+- Compiler warnings are enabled (-Wall -Wextra)
+- Backend logging provides detailed operation info
+- Frontend console shows detailed error messages
