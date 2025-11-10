@@ -495,8 +495,11 @@
                             a.download = data.download_file;
                             document.body.appendChild(a);
                             a.click();
-                            window.URL.revokeObjectURL(url);
-                            document.body.removeChild(a);
+                            // Delay cleanup to avoid aggressive browsers cancelling the download
+                            setTimeout(() => {
+                                window.URL.revokeObjectURL(url);
+                                a.remove();
+                            }, 1500);
                         } catch (error) {
                             showError('compressError', 'Download failed: ' + error.message);
                         }
@@ -561,8 +564,11 @@
                             a.download = data.download_file;
                             document.body.appendChild(a);
                             a.click();
-                            window.URL.revokeObjectURL(url);
-                            document.body.removeChild(a);
+                            // Delay cleanup to avoid aggressive browsers cancelling the download
+                            setTimeout(() => {
+                                window.URL.revokeObjectURL(url);
+                                a.remove();
+                            }, 1500);
                         } catch (error) {
                             showError('decompressError', 'Download failed: ' + error.message);
                         }

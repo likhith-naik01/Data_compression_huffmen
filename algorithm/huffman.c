@@ -113,12 +113,17 @@ void generateCodes(Node *root, int *arr, int top, char **codes) {
 
 // Write compressed output
 void writeCompressedFile(const char *input_file, const char *output_file) {
+    printf("Starting compression...\n");
+    printf("Input file: %s\n", input_file);
+    printf("Output file: %s\n", output_file);
+    
     // Count frequencies first
     unsigned freq[MAX_CHARS] = {0};
     char *codes[MAX_CHARS] = {NULL};
     FILE *f = fopen(input_file, "r");
     if (!f) {
-        printf("Error opening input file\n");
+        printf("Error opening input file: %s\n", input_file);
+        perror("Reason");
         return;
     }
 
@@ -146,11 +151,13 @@ void writeCompressedFile(const char *input_file, const char *output_file) {
         return;
     }
 
+    printf("Building Huffman tree with %d unique characters\n", count);
     Node *root = buildHuffmanTree(data, freqs, count);
     if (!root) {
         printf("Error building Huffman tree\n");
         return;
     }
+    printf("Huffman tree built successfully\n");
 
     // Generate Huffman codes
     int arr[MAX_TREE_HT];

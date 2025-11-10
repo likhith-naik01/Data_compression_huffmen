@@ -65,13 +65,19 @@ def compress_file():
         # Call C program
         command = [ALGORITHM_PATH, '-c', input_path, output_path]
         log_debug(f"Running compression command: {' '.join(command)}")
+        log_debug(f"Current directory: {os.getcwd()}")
+        log_debug(f"Algorithm directory: {os.path.dirname(ALGORITHM_PATH)}")
         
-        result = subprocess.run(
-            command,
-            capture_output=True,
-            text=True,
-            cwd=os.path.dirname(ALGORITHM_PATH)  # Run from algorithm directory
-        )
+        try:
+            result = subprocess.run(
+                command,
+                capture_output=True,
+                text=True,
+                cwd=os.path.dirname(ALGORITHM_PATH)  # Run from algorithm directory
+            )
+        except Exception as e:
+            log_debug(f"Exception running compression: {str(e)}")
+            raise
         
         log_debug(f"Command exit code: {result.returncode}")
         log_debug(f"Command output: {result.stdout}")
@@ -219,9 +225,9 @@ if __name__ == '__main__':
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
     
     print("\n=== Huffman Compression Server ===")
-    print("✅ Algorithm found at:", os.path.abspath(ALGORITHM_PATH))
-    print("✅ Upload folder ready at:", os.path.abspath(UPLOAD_FOLDER))
-    print("🚀 Starting server at: http://localhost:5000")
+    print("Algorithm found at:", os.path.abspath(ALGORITHM_PATH))
+    print("Upload folder ready at:", os.path.abspath(UPLOAD_FOLDER))
+    print("Starting server at: http://localhost:5000")
     print("Press Ctrl+C to stop the server\n")
     
     # Start the server
